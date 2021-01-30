@@ -5,7 +5,8 @@ Created on Fri Jan 29 23:09:01 2021
 @author: widmer
 """
 
-def get_load(data):
+
+def get_operator_status(date, data):
     occupied = 0
     available = 0
     outofservice = 0
@@ -20,28 +21,48 @@ def get_load(data):
             outofservice = outofservice+1 
         if data[i]["EVSEStatus"] == 'Unknown' :
             unknown = unknown+1 
-    return [occupied, available, unknown, outofservice]
+    return [date, occupied, available, unknown, outofservice]
 
-def print_network(name, list, date):
-    print(dateTimeObj, "   ",name , "            ", list)
-    if list[0] != 0:
-        print(dateTimeObj, "   ", name , "Workload [%]", (list[1]-list[2])/list[0] )
-    else:
-        print(dateTimeObj, "   ", name , "Workload [%]",0)
+def get_station_status(data, station):
+    length = len(data)
+    for i in range(length):
+        if data[i]["EvseID"] == station:
+            return data[i]['EVSEStatus']
+
+def print_network(name, list):
+    print(name , "            ", list)
     
+def log_csv(filename, data, fields):
+    import csv
+    import os
+     
+        
+    # data rows of csv file  
+    is_empty =  os.path.exists(filename) == 0
+    with open(filename, 'a') as f: 
+          
+        # using csv.writer method from CSV package 
+        write = csv.writer(f, delimiter=',',lineterminator='\r') 
+        if is_empty: write.writerow(fields) 
+        write.writerow(data) 
+        f.close()
     
           
 
 url_link = "https://data.geo.admin.ch/ch.bfe.ladestellen-elektromobilitaet/status/oicp/ch.bfe.ladestellen-elektromobilitaet.json"
+url_link_static = "https://data.geo.admin.ch/ch.bfe.ladestellen-elektromobilitaet/data/oicp/ch.bfe.ladestellen-elektromobilitaet.json"
 
 import urllib.request, json 
 with urllib.request.urlopen(url_link) as url:
     data = json.loads(url.read().decode())
+with urllib.request.urlopen(url_link_static) as url:
+    data_static = json.loads(url.read().decode())
 
 
 
 ev_status = data["EVSEStatuses"]
 
+#extract data for all charging networks
 length = len(ev_status)
 for i in range(length):
     if ev_status[i]['OperatorName'] == 'Swisscharge':
@@ -59,23 +80,48 @@ for i in range(length):
     if ev_status[i]['OperatorName'] == 'Move':
         move = ev_status[i]["EVSEStatusRecord"]
 
-
-swisscharge_list = get_load(swisscharge)
-fast_ned_list = get_load(fast_ned)
-plugn_roll_list = get_load(plug_nroll)
-evpass_list = get_load(evpass)
-easy4you_list = get_load(easy4you)
-move_list = get_load(move)
-ecarup_list = get_load(ecarup)
-
-
 from datetime import datetime
-dateTimeObj = datetime.now()
-print("Date                            Occupied | Available | Outofservice | Unknown")
-print_network("Swisscharge", swisscharge_list, dateTimeObj )
-print_network("Fast Ned", fast_ned_list, dateTimeObj )
-print_network("evPass", evpass_list, dateTimeObj )
-print_network("Plugnroll", plugn_roll_list, dateTimeObj )
-print_network("EcarUP", ecarup_list, dateTimeObj )
-print_network("Easy4you", easy4you_list, dateTimeObj )
-print_network("Move", move_list, dateTimeObj )
+
+now = datetime.now() # current date and time
+date_time = now.strftime("%m/%d/%Y, %H:%M:%S")	
+
+swisscharge_list = get_operator_status(date_time, swisscharge)
+fast_ned_list = get_operator_status(date_time, fast_ned)
+plugn_roll_list = get_operator_status(date_time, plug_nroll)
+evpass_list = get_operator_status(date_time, evpass)
+easy4you_list = get_operator_status(date_time, easy4you)
+move_list = get_operator_status(date_time, move)
+ecarup_list = get_operator_status(date_time, ecarup)
+
+
+
+# field names  
+fields = ['Date', 'Occupied', 'Available', 'Outofservice', 'Unknown']  
+
+print_out = 0
+if print_out == 1 :
+    print("Date                            Occupied | Available | Outofservice | Unknown")
+    print_network("Swisscharge", swisscharge_list )
+    print_network("Fast Ned", fast_ned_list )
+    print_network("evPass", evpass_list )
+    print_network("Plugnroll", plugn_roll_list)
+    print_network("EcarUP", ecarup_list )
+    print_network("Easy4you", easy4you_list )
+    print_network("Move", move_list )
+
+log_csv("swisscharge.csv", swisscharge_list, fields)
+log_csv("fastned.csv", fast_ned_list, fields )
+log_csv("evPass.csv", evpass_list, fields )
+log_csv("Plugnroll.csv", plugn_roll_list, fields)
+log_csv("EcarUP.csv", ecarup_list, fields )
+log_csv("Easy4you.csv", easy4you_list, fields )
+log_csv("Move.csv", move_list, fields )
+
+
+zurich_list = [get_station_status(swisscharge, "CH*SWIEE24646"), get_station_status(easy4you, "CH*E4U*E00648"), get_station_status(swisscharge, "CH*SWIEE23219") 
+               , ]
+
+log_csv("Zurich.csv", zurich_list, ["Schamwedingen", "Fällanden", "Mythenquai"])
+
+
+
