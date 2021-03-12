@@ -83,7 +83,7 @@ for i in range(length):
 from datetime import datetime
 
 now = datetime.now() # current date and time
-date_time = now.strftime("%m/%d/%Y, %H:%M:%S")	
+date_time = now.strftime("%m/%d/%Y, %H:%M")	
 
 swisscharge_list = get_operator_status(date_time, swisscharge)
 fast_ned_list = get_operator_status(date_time, fast_ned)
