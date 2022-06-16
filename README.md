@@ -3,6 +3,7 @@ Read live data from https://www.admin.ch/gov/de/start/dokumentation/medienmittei
 
 To generate data create a cronjob to log data at least every 15 minutes:
 
+``` bash
 0 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
 0 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
 5 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
@@ -26,5 +27,5 @@ To generate data create a cronjob to log data at least every 15 minutes:
 50 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
 50 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
 55 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-55 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
+55 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py´´´
 
