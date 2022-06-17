@@ -75,8 +75,6 @@ for i in range(length):
         fast_ned = ev_status[i]["EVSEStatusRecord"] 
     if ev_status[i]['OperatorName'] == 'eCarUp':
         ecarup = ev_status[i]["EVSEStatusRecord"] 
-    if ev_status[i]['OperatorName'] == 'easy4you':
-        easy4you = ev_status[i]["EVSEStatusRecord"]
     if ev_status[i]['OperatorName'] == 'Move':
         move = ev_status[i]["EVSEStatusRecord"]
 
@@ -89,7 +87,6 @@ swisscharge_list = get_operator_status(date_time, swisscharge)
 fast_ned_list = get_operator_status(date_time, fast_ned)
 plugn_roll_list = get_operator_status(date_time, plug_nroll)
 evpass_list = get_operator_status(date_time, evpass)
-easy4you_list = get_operator_status(date_time, easy4you)
 move_list = get_operator_status(date_time, move)
 ecarup_list = get_operator_status(date_time, ecarup)
 
@@ -106,7 +103,6 @@ if print_out == 1 :
     print_network("evPass", evpass_list )
     print_network("Plugnroll", plugn_roll_list)
     print_network("EcarUP", ecarup_list )
-    print_network("Easy4you", easy4you_list )
     print_network("Move", move_list )
 
 log_csv("swisscharge.csv", swisscharge_list, fields)
@@ -114,14 +110,8 @@ log_csv("fastned.csv", fast_ned_list, fields )
 log_csv("evPass.csv", evpass_list, fields )
 log_csv("Plugnroll.csv", plugn_roll_list, fields)
 log_csv("EcarUP.csv", ecarup_list, fields )
-log_csv("Easy4you.csv", easy4you_list, fields )
 log_csv("Move.csv", move_list, fields )
 
-
-zurich_list = [get_station_status(swisscharge, "CH*SWIEE24646"), get_station_status(easy4you, "CH*E4U*E00648"), get_station_status(swisscharge, "CH*SWIEE23219") 
-               , ]
-
-log_csv("Zurich.csv", zurich_list, ["Schamwedingen", "Fällanden", "Mythenquai"])
 
 
 
