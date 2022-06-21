@@ -1,31 +1,24 @@
-# chargestation_workload
-Read live data from https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-76512.html
+# Json_read_charge.py
 
-To generate data create a cronjob to log data at least every 15 minutes:
+Read live data from ich-tanke-strom.ch
+Dataset: https://opendata.swiss/dataset/ladestationen-fuer-elektroautos/resource/4d467a51-0bc9-48ce-aa2a-3d3bcaa7e7e9 
+The script download the JSON stream and store the data from the five biggest operator into a csv file.
 
-``` bash
+Execute the script as a cronjob to log data continously (every 15 minutes):
+
+```bash
 0 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-0 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
-5 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-5 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
-10 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-10 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
 15 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-15 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
-20 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-20 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
-25 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-25 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
 30 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-30 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
-35 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-35 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
-40 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-40 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
 45 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-45 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
-50 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-50 * * * * cd /home/pi/chargestation_workload; python3 teslalogger_readphp_suc_status.py
-55 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py
-55 * * * * cd /home/pi/chargestation_workload; python3 Json_read_charge.py´´´
+```
+
+# plot_data.py
+Search for the above generated csv files and plot some statistics
+
+# teslalogger_readphp_suc_status.py
+Log SuC data from teslalogger.de (experimental)
+
+
+
 
