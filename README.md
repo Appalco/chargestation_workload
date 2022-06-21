@@ -18,7 +18,7 @@ Search for the above generated csv files and plot some statistics
 
 # teslalogger_readphp_suc_status.py
 Log SuC data from teslalogger.de (experimental)
-
+Logging to existing .csv is corrupt, if new Supercharger is added to teslalogger.de (new SuCs builded by Tesla or a Supercharger is showed again after data was old)
 
 
 
