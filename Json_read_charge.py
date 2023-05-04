@@ -69,7 +69,7 @@ for i in range(length):
         swisscharge = ev_status[i]["EVSEStatusRecord"] 
     if ev_status[i]['OperatorName'] == 'evpass':
         evpass = ev_status[i]["EVSEStatusRecord"] 
-    if ev_status[i]['OperatorName'] == 'PLUG’N ROLL':
+    if ev_status[i]['OperatorName'] == 'PLUG N ROLL':
         plug_nroll = ev_status[i]["EVSEStatusRecord"] 
     if ev_status[i]['OperatorName'] == 'Fastned':
         fast_ned = ev_status[i]["EVSEStatusRecord"] 

@@ -22,7 +22,7 @@ def moving_avg(x, n):
     return (cumsum[n:] - cumsum[:-n]) / float(n)
 
 def plot(x, y, labels, title, ticks_n):
-    fig, ax = plt.subplots(dpi=300)
+    fig, ax = plt.subplots(dpi=150)
     plt.xticks(rotation=90)
     ax.stackplot(x, y, labels=labels)
     ax.set_title(title)
@@ -37,8 +37,8 @@ def plot(x, y, labels, title, ticks_n):
     return
 
 def multiplot(x, y1, y2, y3, y4, y5, labels, title, ticks_n):
-    plt.figure(dpi=300)
-    fig, ax = plt.subplots(dpi=300)
+    plt.figure(dpi=150)
+    fig, ax = plt.subplots(dpi=150)
     plt.xticks(rotation=90)
     ax.plot(x, y1, label=labels[0])
     ax.plot(x, y2, label=labels[1])
